@@ -124,31 +124,31 @@ function showPage(pageId) {
                     <h3>Annual Breakdown</h3>
                     <div class="result-item">
                         <span class="result-label">Gross Salary</span>
-                        <span class="result-value">£${salary.toLocaleString()}</span>
+                        <span class="result-value">£${salary.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Income Tax</span>
-                        <span class="result-value">-£${taxCalc.incomeTax.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc.incomeTax.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">National Insurance</span>
-                        <span class="result-value">-£${taxCalc.nationalInsurance.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc.nationalInsurance.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Pension Contribution</span>
-                        <span class="result-value">-£${taxCalc.pension.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc.pension.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Student Loan</span>
-                        <span class="result-value">-£${taxCalc.studentLoan.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc.studentLoan.toFixed(2)}</span>
                     </div>
                     <div class="result-item" style="border-top: 2px solid #3498db; padding-top: 15px; margin-top: 15px;">
                         <span class="result-label"><strong>Annual Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc.takeHome.toLocaleString()}</span>
+                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc.takeHome.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label"><strong>Monthly Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc.takeHome / 12).toLocaleString()}</span>
+                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc.takeHome / 12).toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Total Tax Rate</span>
@@ -178,8 +178,8 @@ function showPage(pageId) {
                 const monthDifference = Math.abs(monthRate - monthRate2);
                 const taxRateDifference = Math.abs(taxRate - taxRate2);
                 
-                const yearPercentDiff = Math.abs((yearRate2 - yearRate) / yearRate * 100).toFixed(1);
-                const monthPercentDiff = Math.abs((monthRate2 - monthRate) / monthRate * 100).toFixed(1);
+                const yearPercentDiff = Math.abs((yearRate2 - yearRate) / yearRate * 100).toFixed(2);
+                const monthPercentDiff = Math.abs((monthRate2 - monthRate) / monthRate * 100).toFixed(2);
                 const taxRatePercentDiff = Math.abs((taxRate2 - taxRate) / taxRate * 100).toFixed(1);
 
                 taxresults += `
@@ -188,31 +188,31 @@ function showPage(pageId) {
                     <h3>Annual Breakdown</h3>
                     <div class="result-item">
                         <span class="result-label">Gross Salary</span>
-                        <span class="result-value">£${salary2.toLocaleString()}</span>
+                        <span class="result-value">£${salary2.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Income Tax</span>
-                        <span class="result-value">-£${taxCalc2.incomeTax.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc2.incomeTax.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">National Insurance</span>
-                        <span class="result-value">-£${taxCalc2.nationalInsurance.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc2.nationalInsurance.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Pension Contribution</span>
-                        <span class="result-value">-£${taxCalc2.pension.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc2.pension.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Student Loan</span>
-                        <span class="result-value">-£${taxCalc2.studentLoan.toLocaleString()}</span>
+                        <span class="result-value">-£${taxCalc2.studentLoan.toFixed(2)}</span>
                     </div>
                     <div class="result-item" style="border-top: 2px solid #3498db; padding-top: 15px; margin-top: 15px;">
                         <span class="result-label"><strong>Annual Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc2.takeHome.toLocaleString()}</span>
+                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc2.takeHome.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label"><strong>Monthly Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc2.takeHome / 12).toLocaleString()}</span>
+                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc2.takeHome / 12).toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Total Tax Rate</span>
@@ -337,7 +337,7 @@ function showPage(pageId) {
         }
 
         function calculateUKTax(salary, age, pensionPercent, studentLoan) {
-            // 2024/25 tax year rates
+            // 2025/26 tax year rates
             const personalAllowance = 12570;
             const basicRateLimit = 50270;
             const higherRateLimit = 125140;
@@ -366,9 +366,9 @@ function showPage(pageId) {
             
             if (salary > niLowerLimit && age === 'under-state-pension') {
                 if (salary <= niUpperLimit) {
-                    nationalInsurance = (salary - niLowerLimit) * 0.12;
+                    nationalInsurance = (salary - niLowerLimit) * 0.08;
                 } else {
-                    nationalInsurance = (niUpperLimit - niLowerLimit) * 0.12 + 
+                    nationalInsurance = (niUpperLimit - niLowerLimit) * 0.08 + 
                                        (salary - niUpperLimit) * 0.02;
                 }
             }
@@ -406,11 +406,11 @@ function showPage(pageId) {
             const taxRate = ((incomeTax + nationalInsurance + studentLoanRepayment) / salary) * 100;
             
             return {
-                incomeTax: Math.round(incomeTax),
-                nationalInsurance: Math.round(nationalInsurance),
-                pension: Math.round(pension),
-                studentLoan: Math.round(studentLoanRepayment),
-                takeHome: Math.round(takeHome),
+                incomeTax: incomeTax,
+                nationalInsurance: nationalInsurance,
+                pension: pension,
+                studentLoan: studentLoanRepayment,
+                takeHome: takeHome,
                 taxRate: taxRate
             };
         }
