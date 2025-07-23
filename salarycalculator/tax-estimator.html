@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/src/styles.css">
+  <title>UK Tax & Take-Home Calculator</title>
+</head>
+<body id="tax-estimator">
+    <div class="container">
+  <!-- Tax Calculator -->
+        <div id="tax-calculator" class="calculator-page">
+            <a class="back-btn" href="index.html">← Back to Home</a>
+            <h2>📊 UK Tax & Take-Home Calculator</h2>
+            
+            <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="tax-salary">Annual Salary (£)</label>
+                        <input type="number" id="tax-salary" placeholder="35000" min="0">
+                    </div>
+                    <div>
+                        <label for="age">Age</label>
+                        <select id="age">
+                            <option value="under-state-pension">Under State Pension Age</option>
+                            <option value="over-state-pension">Over State Pension Age</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="pension-percent">Pension Contribution (%)</label>
+                        <input type="number" id="pension-percent" placeholder="5" min="0" max="100" step="0.1">
+                    </div>
+                    <div>
+                        <label for="student-loan">Student Loan Type</label>
+                        <select id="student-loan">
+                            <option value="none">No Student Loan</option>
+                            <option value="plan1">Plan 1 (Started before Sept 2012)</option>
+                            <option value="plan2">Plan 2 (Started Sept 2012 onwards)</option>
+                            <option value="postgrad">Postgraduate Loan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="tax-calculator-compare-salaries">
+                    <label for="tax-calculator-compare-salaries">Compare with second salary</label>
+                </div>
+            </div>
+
+            <div id="tax-calculator-comparison" style="display: none;">
+                <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="tax-salary-2">Annual Salary (£)</label>
+                        <input type="number" id="tax-salary-2" placeholder="35000" min="0">
+                    </div>
+                    <div>
+                        <label for="age-2">Age</label>
+                        <select id="age-2">
+                            <option value="under-state-pension">Under State Pension Age</option>
+                            <option value="over-state-pension">Over State Pension Age</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="pension-percent-2">Pension Contribution (%)</label>
+                        <input type="number" id="pension-percent-2" placeholder="5" min="0" max="100" step="0.1">
+                    </div>
+                    <div>
+                        <label for="student-loan-2">Student Loan Type</label>
+                        <select id="student-loan-2">
+                            <option value="none">No Student Loan</option>
+                            <option value="plan1">Plan 1 (Started before Sept 2012)</option>
+                            <option value="plan2">Plan 2 (Started Sept 2012 onwards)</option>
+                            <option value="postgrad">Postgraduate Loan</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <button id="calculate-tax" class="calculate-btn">Calculate Take-Home Pay</button>
+            
+            <div id="tax-results"></div>
+        </div>
+    </div>
+        <script type="module" src="/src/app.js" defer></script>
+</body>
+</html>

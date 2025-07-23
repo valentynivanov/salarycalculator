@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="/src/styles.css">
+  <title>Budget Planner</title>
+</head>
+<body id="budget-planner">
+    <div class="container">
+  <!-- Budget Calculator -->
+        <div id="budget-calculator" class="calculator-page">
+            <a class="back-btn" href="index.html">← Back to Home</a>
+            <h2>📈 Budget Planner</h2>
+            
+            <div class="form-group">
+                <label for="monthly-income">Monthly Take-Home Income (£)</label>
+                <input type="number" id="monthly-income" placeholder="2500" min="0">
+            </div>
+
+            <div id="budget-categories" class="budget-categories">
+                <div class="form-group">
+                    <label for="rent-mortgage">Rent/Mortgage</label>
+                    <input type="number" id="rent-mortgage" placeholder="800" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="utilities">Utilities & Bills</label>
+                    <input type="number" id="utilities" placeholder="150" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="food-groceries">Food & Groceries</label>
+                    <input type="number" id="food-groceries" placeholder="300" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="transport">Transport</label>
+                    <input type="number" id="transport" placeholder="120" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="insurance">Insurance</label>
+                    <input type="number" id="insurance" placeholder="80" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="entertainment">Entertainment</label>
+                    <input type="number" id="entertainment" placeholder="200" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="savings">Savings</label>
+                    <input type="number" id="savings" placeholder="300" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="other-expenses">Other Expenses</label>
+                    <input type="number" id="other-expenses" placeholder="100" min="0">
+                </div>
+            </div>
+
+            <button id="add-expense">Add Expense</button>
+            <button id="save-expense">Save Expense</button>
+            <button id="delete-expense">Delete Expense</button>
+
+            <button id="calculate-budget" class="calculate-btn">Analyze Budget</button>
+            
+            <div id="budget-results"></div>
+        </div>
+    </div>
+        <script type="module" src="/src/app.js" defer></script>
+</body>
+</html>

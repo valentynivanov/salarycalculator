@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="/src/styles.css">
+    <title>Salary to Hourly Calculator</title>
+</head>
+<body id="salary-to-hourly">
+    <div class="container">
+    <!-- Salary to Hourly Calculator -->
+        <div id="salary-hourly" class="calculator-page">
+            <a class="back-btn" href="index.html">← Back to Home</a>
+            <h2>💰 Salary to Hourly Calculator</h2>
+            
+            <div class="form-group">
+                <div class="form-row">
+                    <div>
+                        <label for="annual-salary">Annual Salary (£)</label>
+                        <input type="number" id="annual-salary" placeholder="35000" min="0">
+                    </div>
+                    <div>
+                        <label for="weekly-hours">Weekly Hours</label>
+                        <input type="number" id="weekly-hours" placeholder="37.5" min="1" max="80" step="0.5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="show-after-tax">
+                    <label for="show-after-tax">Show after-tax hourly rate (estimate)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="compare-salaries">
+                    <label for="compare-salaries">Compare with second salary</label>
+                </div>
+            </div>
+
+            <div id="comparison-inputs" style="display: none;">
+                <div class="form-row">
+                    <div>
+                        <label for="annual-salary-2">Second Annual Salary (£)</label>
+                        <input type="number" id="annual-salary-2" placeholder="40000" min="0">
+                    </div>
+                    <div>
+                        <label for="weekly-hours-2">Second Weekly Hours</label>
+                        <input type="number" id="weekly-hours-2" placeholder="40" min="1" max="80" step="0.5">
+                    </div>
+                </div>
+            </div>
+
+            <button id="calculate-hourly" class="calculate-btn">Calculate Hourly Rates</button>
+            
+            <div id="hourly-results"></div>
+        </div>
+    </div>
+        <script type="module" src="/src/app.js" defer></script>
+</body>
+</html>
