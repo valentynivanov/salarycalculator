@@ -91,7 +91,7 @@
         }
 
         .calculator-page h2{
-            margin: 20px 0;
+            margin: 50px 0 20px 0;
         }
 
         .back-btn {
@@ -104,6 +104,7 @@
             cursor: pointer;
             margin-bottom: 20px;
             font-size: 14px;
+            font-weight: 600;
             transition: background 0.3s ease;
         }
 
@@ -128,16 +129,17 @@
             font-weight: 500;
         }
 
-        input[type="number"], select {
+        input[type='number'],input[type='text'], select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e6ed;
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s ease;
+            margin-bottom: 10px;
         }
 
-        input[type="number"]:focus, select:focus {
+        input[type='number']:focus,input[type='text']:focus, select:focus {
             outline: none;
             border-color: #3498db;
         }
@@ -171,7 +173,7 @@
             background: #f8f9fa;
             border-radius: 12px;
             padding: 25px;
-            margin-top: 20px;
+            margin: 20px 0;
             border-left: 5px solid #3498db;
             border-bottom: 1px solid #3498db;
             border-top: 1px solid #3498db;
@@ -197,7 +199,7 @@
 
         .result-value {
             font-weight: 700;
-            color: #333;
+            color: #2c3e50;
             font-size: 1.1rem;
         }
 
@@ -206,7 +208,7 @@
         }
 
         .expenses{
-            color: crimson;
+            color: #e74c3c;
         }
 
         .warning {
@@ -243,6 +245,44 @@
             height: 300px;
             margin: 20px auto;
             position: relative;
+        }
+
+        .budget-btns{
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: transform 0.2s ease;
+        }
+
+        #add-expense-btn{
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        #add-expense-btn:hover,#add-expense-btn:focus,#add-expense-btn:active{
+            background: linear-gradient(135deg, #229954, #27ae60);
+        }
+
+        #save-expense-btn{
+            background: linear-gradient(135deg, #3498db, #5dade2);
+            display: none;
+        }
+
+        #save-expense-btn:hover, #save-expense-btn:focus,#save-expense-btn:active{
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            display: none;
+        }
+
+        #delete-expense-btn{
+            background: linear-gradient(135deg, #e74c3c, #ec7063);
+            display: none;
+        }
+        #delete-expense-btn:hover,#delete-expense-btn:focus,#delete-expense-btn:active{
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
         }
 
         @media (max-width: 768px) {

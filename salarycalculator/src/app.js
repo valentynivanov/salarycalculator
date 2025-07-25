@@ -7,6 +7,7 @@ Chart.register(ChartDataLabels);
 const currentPage = document.body.id;
 
 if (currentPage === "home") {
+    console.log('Home page loaded')
   // home page logic
 } else if (currentPage === "salary-to-hourly") {
 
@@ -128,35 +129,35 @@ if (currentPage === "home") {
                     <h3>Annual Breakdown</h3>
                     <div class="result-item">
                         <span class="result-label">Gross Salary</span>
-                        <span class="result-value">£${salary.toFixed(2)}</span>
+                        <span class="result-value income">£${salary.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Income Tax</span>
-                        <span class="result-value">-£${taxCalc.incomeTax.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc.incomeTax.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">National Insurance</span>
-                        <span class="result-value">-£${taxCalc.nationalInsurance.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc.nationalInsurance.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Pension Contribution</span>
-                        <span class="result-value">-£${taxCalc.pension.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc.pension.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Student Loan</span>
-                        <span class="result-value">-£${taxCalc.studentLoan.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc.studentLoan.toFixed(2)}</span>
                     </div>
                     <div class="result-item" style="border-top: 2px solid #3498db; padding-top: 15px; margin-top: 15px;">
                         <span class="result-label"><strong>Annual Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc.takeHome.toFixed(2)}</span>
+                        <span class="result-value income" style="font-size: 1.3rem;">£${taxCalc.takeHome.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label"><strong>Monthly Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc.takeHome / 12).toFixed(2)}</span>
+                        <span class="result-value income" style="font-size: 1.3rem;">£${(taxCalc.takeHome / 12).toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Total Tax Rate</span>
-                        <span class="result-value">${taxCalc.taxRate.toFixed(1)}%</span>
+                        <span class="result-value expenses">${taxCalc.taxRate.toFixed(1)}%</span>
                     </div>
                 </div>
             `;
@@ -192,54 +193,54 @@ if (currentPage === "home") {
                     <h3>Annual Breakdown</h3>
                     <div class="result-item">
                         <span class="result-label">Gross Salary</span>
-                        <span class="result-value">£${salary2.toFixed(2)}</span>
+                        <span class="result-value income">£${salary2.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Income Tax</span>
-                        <span class="result-value">-£${taxCalc2.incomeTax.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc2.incomeTax.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">National Insurance</span>
-                        <span class="result-value">-£${taxCalc2.nationalInsurance.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc2.nationalInsurance.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Pension Contribution</span>
-                        <span class="result-value">-£${taxCalc2.pension.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc2.pension.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Student Loan</span>
-                        <span class="result-value">-£${taxCalc2.studentLoan.toFixed(2)}</span>
+                        <span class="result-value expenses">-£${taxCalc2.studentLoan.toFixed(2)}</span>
                     </div>
                     <div class="result-item" style="border-top: 2px solid #3498db; padding-top: 15px; margin-top: 15px;">
                         <span class="result-label"><strong>Annual Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${taxCalc2.takeHome.toFixed(2)}</span>
+                        <span class="result-value income" style="font-size: 1.3rem;">£${taxCalc2.takeHome.toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label"><strong>Monthly Take-Home</strong></span>
-                        <span class="result-value" style="font-size: 1.3rem;">£${(taxCalc2.takeHome / 12).toFixed(2)}</span>
+                        <span class="result-value income" style="font-size: 1.3rem;">£${(taxCalc2.takeHome / 12).toFixed(2)}</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Total Tax Rate</span>
-                        <span class="result-value">${taxCalc2.taxRate.toFixed(1)}%</span>
+                        <span class="result-value expenses">${taxCalc2.taxRate.toFixed(1)}%</span>
                     </div>
                 </div>
                 <div class="results">
                             <div class="result-item">
                                 <span class="result-label">Annual Difference</span>
-                                <span class="result-value">
+                                <span class="result-value income">
                                    £${yearDifference.toFixed(2)} (${yearPercentDiff}%)
                                 </span>
                             </div>
                             <div class="result-item">
                                 <span class="result-label">Monthly Difference</span>
-                                <span class="result-value">
+                                <span class="result-value income">
                                     £${monthDifference.toFixed(2)} (${monthPercentDiff}%)
                                 </span>
                             </div>
                             <div class="result-item">
                                 <span class="result-label">Tax Rate Difference</span>
-                                <span class="result-value">
-                                    %${taxRateDifference.toFixed(2)} (${taxRatePercentDiff}%)
+                                <span class="result-value expenses">
+                                    ${taxRateDifference.toFixed(2)}%
                                 </span>
                             </div>
                         </div>
@@ -251,213 +252,308 @@ if (currentPage === "home") {
         }
 
 } else {
-    document.getElementById('calculate-budget').addEventListener('click', calculateBudget)
+    document.getElementById('calculate-budget').addEventListener('click', calculateBudget);
 
-    document.getElementById('add-expense').addEventListener('click', addExpense)
-    document.getElementById('save-expense').addEventListener('click', saveExpense)
-    document.getElementById('delete-expense').addEventListener('click', deleteBtn)
+    const addBtn = document.getElementById('add-expense-btn');
+    const saveBtn = document.getElementById('save-expense-btn');
+    const deleteBtn = document.getElementById('delete-expense-btn');
+
+    addBtn.addEventListener('click', addExpense);
+    saveBtn.addEventListener('click', saveExpense);
+    deleteBtn.addEventListener('click', deleteExtraExpenses);
 
     let idCounter = 1;
     let currentEditableId = null;
 
     function addExpense() {
+        if (currentEditableId) {
+            alert("Please save the current expense before adding another.");
+            return;
+        }
+
     const uid = `expense-${idCounter++}`;
     currentEditableId = uid;
 
-    const newElement = `
-        <div id="${uid}" class="form-group">
-        <input type="text" id="${uid}-label" placeholder="Enter label">
-        <input type="number" id="${uid}-number" placeholder="300" min="0">
-        </div>
-    `;
+    const div = document.createElement('div');
+    div.id = uid;
+    div.className = 'form-group';
 
-    document.getElementById('budget-categories').innerHTML += newElement;
+    const labelInput = document.createElement('input');
+    labelInput.type = 'text';
+    labelInput.placeholder = 'Enter expense';
+    labelInput.id = `${uid}-label`;
+
+    const numberInput = document.createElement('input');
+    numberInput.type = 'number';
+    numberInput.placeholder = '300';
+    numberInput.min = '0';
+    numberInput.id = `${uid}-number`;
+
+    div.appendChild(labelInput);
+    div.appendChild(numberInput);
+
+    document.getElementById('budget-categories').appendChild(div);
+
+    saveBtn.style.display = 'block';
+    addBtn.style.display = 'none';
+    deleteBtn.style.display = 'none';
+}
+
+function saveExpense() {
+    if (!currentEditableId) return alert("Please add an expense first.");
+
+    const labelInput = document.getElementById(`${currentEditableId}-label`);
+    const numberInput = document.getElementById(`${currentEditableId}-number`);
+
+    const userLabel = labelInput.value.trim();
+    const userNumber = numberInput.value.trim();
+
+    if (!userLabel || !userNumber) return alert("Please enter both label and number.");
+
+    const savedId = `saved-${currentEditableId}`;
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.id = savedId;
+
+    const label = document.createElement('label');
+    label.textContent = userLabel;
+
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.value = userNumber;
+    input.readOnly = true;
+
+    div.appendChild(label);
+    div.appendChild(input);
+
+    document.getElementById('budget-categories').appendChild(div);
+
+    // Remove the editable input
+    deleteExpense(currentEditableId);
+    currentEditableId = null;
+
+    saveBtn.style.display = 'none';
+    addBtn.style.display = 'block';
+    updateDeleteButton();
+}
+
+function deleteExpense(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+    updateDeleteButton();
+}
+
+function deleteExtraExpenses() {
+    const element = document.querySelector('.form-group:last-child')
+    if(element){
+        element.remove()
     }
+    updateDeleteButton();
+}
 
-    function saveExpense() {
-        if (!currentEditableId) return alert("Please add an expense first.");
-
-        const labelInput = document.getElementById(`${currentEditableId}-label`);
-        const numberInput = document.getElementById(`${currentEditableId}-number`);
-
-        const userLabel = labelInput.value;
-        const userNumber = numberInput.value;
-
-        if (!userLabel || !userNumber) return alert("Please enter both label and number.");
-
-        const savedId = `saved-${currentEditableId}`;
-        const newElement = document.createElement('div');
-        newElement.className = 'form-group';
-        newElement.id = savedId;
-
-        newElement.innerHTML = `
-            <label>${userLabel}</label>
-            <input type="number" value="${userNumber}" readonly>
-        `;
-
-        document.getElementById('budget-categories').appendChild(newElement);
-
-        // Remove the editable element
-        deleteExpense(currentEditableId);
-        currentEditableId = null;
-    }
-
-    function deleteExpense(id) {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-    }
-
-    function deleteBtn(){
-        const element = document.querySelector('.form-group:last-child')
-        if(element){
-            element.remove()
-        }
-    }
+function updateDeleteButton() {
+    const all = document.querySelectorAll('#budget-categories .form-group');
+    deleteBtn.style.display = all.length === 0 ? 'none' : 'block';
+}
 
     // Budget Calculator
-        function calculateBudget() {
-            const income = parseFloat(document.getElementById('monthly-income').value);
-            
-            if (!income) {
-                alert('Please enter your monthly income');
-                return;
+    function calculateBudget() {
+
+        const allInputs = document.querySelectorAll('#budget-categories input[type="number"]');
+        if (allInputs.length < 2) {
+            alert("At least 2 expenses are required to calculate.");
+            return;
+        }
+        const income = parseFloat(document.getElementById('monthly-income').value);
+        if (!income) {
+            alert('Please enter your monthly income');
+            return;
+        }
+
+        // 1. Get hardcoded expenses
+        const hardcodedFields = [
+            { id: 'rent-mortgage', label: 'Rent/Mortgage', color: '#3498db' },
+            { id: 'utilities', label: 'Utilities', color: '#9b59b6' },
+            { id: 'food-groceries', label: 'Food & Groceries', color: '#e74c3c' },
+            { id: 'transport', label: 'Transport', color: '#f39c12' },
+            { id: 'insurance', label: 'Insurance', color: '#34495e' },
+            { id: 'entertainment', label: 'Entertainment', color: '#1abc9c' },
+            { id: 'savings', label: 'Savings', color: '#27ae60' },
+            { id: 'subscriptions', label: 'Subscriptions', color: '#b43bb4ff' },
+            { id: 'other-expenses', label: 'Other', color: '#95a5a6' }
+        ];
+
+        const chartData = [];
+        let totalExpenses = 0;
+
+        // Add hardcoded values
+        for (const field of hardcodedFields) {
+            const value = parseFloat(document.getElementById(field.id)?.value) || 0;
+            if (value > 0) {
+                chartData.push({ label: field.label, value, color: field.color });
+                totalExpenses += value;
             }
-            
-            const expenses = {
-                rent: parseFloat(document.getElementById('rent-mortgage').value) || 0,
-                utilities: parseFloat(document.getElementById('utilities').value) || 0,
-                food: parseFloat(document.getElementById('food-groceries').value) || 0,
-                transport: parseFloat(document.getElementById('transport').value) || 0,
-                insurance: parseFloat(document.getElementById('insurance').value) || 0,
-                entertainment: parseFloat(document.getElementById('entertainment').value) || 0,
-                savings: parseFloat(document.getElementById('savings').value) || 0,
-                other: parseFloat(document.getElementById('other-expenses').value) || 0
-            };
-            
-            const totalExpenses = Object.values(expenses).reduce((a, b) => a + b, 0);
-            const remaining = income - totalExpenses;
-            const isOverspending = remaining < 0;
-            
-            let results = `
-                <div class="results">
-                    <h3>Budget Summary</h3>
-                    <div class="result-item">
-                        <span class="result-label">Monthly Income</span>
-                        <span class="result-value income">+£${income.toLocaleString()}</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Total Expenses</span>
-                        <span class="result-value expenses">-£${totalExpenses.toLocaleString()}</span>
-                    </div>
-                    <div class="result-item" style="border-top: 2px solid ${isOverspending ? '#e74c3c' : '#27ae60'}; padding-top: 15px;">
-                        <span class="result-label"><strong>${isOverspending ? 'Budget Deficit' : 'Remaining Budget'}</strong></span>
-                        <span class="result-value" style="color: ${isOverspending ? '#e74c3c' : '#27ae60'}; font-size: 1.3rem;">
-                            ${isOverspending ? '-' : '+'}£${Math.abs(remaining).toLocaleString()}
-                        </span>
-                    </div>
-                </div>
-            `;
-            
-            if (isOverspending) {
-                results += `
-                    <div class="warning">
-                        <strong>⚠️ Budget Alert:</strong> You're overspending by £${Math.abs(remaining).toLocaleString()} per month. 
-                        Consider reducing expenses or finding additional income sources.
-                    </div>
-                `;
+        }
+
+        // 2. Add custom saved expenses
+        const savedGroups = document.querySelectorAll('#budget-categories .form-group[id^="saved-"]');
+        savedGroups.forEach(group => {
+            const label = group.querySelector('label')?.textContent.trim();
+            const value = parseFloat(group.querySelector('input')?.value) || 0;
+            const color = getRandomColor();
+            if (value > 0) {
+                chartData.push({ label, value, color });
+                totalExpenses += value;
             }
-            
-            // Simple pie chart representation
-            const chartData = [
-                { label: 'Rent/Mortgage', value: expenses.rent, color: '#3498db' },
-                { label: 'Food & Groceries', value: expenses.food, color: '#e74c3c' },
-                { label: 'Transport', value: expenses.transport, color: '#f39c12' },
-                { label: 'Utilities', value: expenses.utilities, color: '#9b59b6' },
-                { label: 'Entertainment', value: expenses.entertainment, color: '#1abc9c' },
-                { label: 'Savings', value: expenses.savings, color: '#27ae60' },
-                { label: 'Insurance', value: expenses.insurance, color: '#34495e' },
-                { label: 'Other', value: expenses.other, color: '#95a5a6' },
-                { label: 'Remaining', value: Math.max(0, remaining), color: '#2ecc71' }
-            ].filter(item => item.value > 0);
-            
-            results += `
-                <div class="results">
-                    <h3>Expenses Breakdown</h3>
-                    ${chartData.map(item => `
-                        <div class="result-item">
-                            <span class="result-label">
-                                <span style="display: inline-block; width: 12px; height: 12px; background: ${item.color}; border-radius: 2px; margin-right: 8px;"></span>
-                                ${item.label}
-                            </span>
-                            <span class="result-value">£${item.value.toLocaleString()} (${((item.value / income) * 100).toFixed(1)}%)</span>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
+        });
 
-            results += `
-                        <h2>Expenses Breakdown</h2>
-                        <canvas id="pieChart"></canvas>
-            `;
-            
-            document.getElementById('budget-results').innerHTML = results;
-            document.getElementById('budget-results').scrollIntoView({ behavior: "smooth", block:"start"});
+        // 3. Enforce minimum 2 expenses
+        if (chartData.length < 2) {
+            alert("Please make sure you have at least 2 expense categories to calculate the budget.");
+            return;
+        }
 
-            const labels = chartData.map(item => item.label) 
-            const values = chartData.map(item => item.value) 
-            const colors = chartData.map(item => item.color) 
-            
-            
-                const data = {
-                    labels: labels,
-                    datasets: [{
-                    label: 'Expenses Breakdown',
-                    data: values,
-                    backgroundColor: colors,
-                    }]
-                };
+        const remaining = income - totalExpenses;
+        const isOverspending = remaining < 0;
 
-                const config = {
-                    type: 'pie',
-                    data: data,
-                    plugins: [ChartDataLabels],
-                    options: {
-                    plugins: {
-                        datalabels: {
+        // 4. Build results safely
+        const resultsContainer = document.getElementById('budget-results');
+        resultsContainer.innerHTML = '';
+
+        const summary = document.createElement('div');
+        summary.className = 'results';
+        summary.innerHTML = `<h3>Budget Summary</h3>`;
+        summary.appendChild(createResultItem('Monthly Income', `+£${income.toLocaleString()}`, 'income'));
+        summary.appendChild(createResultItem('Total Expenses', `-£${totalExpenses.toLocaleString()}`, 'expenses'));
+
+        const balance = createResultItem(
+            isOverspending ? 'Budget Deficit' : 'Remaining Budget',
+            `${isOverspending ? '-' : '+'}£${Math.abs(remaining).toLocaleString()}`,
+            '',
+            isOverspending ? '#e74c3c' : '#27ae60',
+            true
+        );
+        summary.appendChild(balance);
+        resultsContainer.appendChild(summary);
+
+        if (isOverspending) {
+            const warning = document.createElement('div');
+            warning.className = 'warning';
+            warning.innerHTML = `<strong>⚠️ Budget Alert:</strong> You're overspending by £${Math.abs(remaining).toLocaleString()} per month. Consider reducing expenses or finding additional income sources.`;
+            resultsContainer.appendChild(warning);
+        }
+
+        // 5. Expenses Breakdown
+        const breakdown = document.createElement('div');
+        breakdown.className = 'results';
+        breakdown.innerHTML = `<h3>Expenses Breakdown</h3>`;
+
+        chartData.forEach(item => {
+            breakdown.appendChild(
+                createResultItem(
+                    item.label,
+                    `£${item.value.toLocaleString()} (${((item.value / income) * 100).toFixed(1)}%)`,
+                    '',
+                    item.color
+                )
+            );
+        });
+        resultsContainer.appendChild(breakdown);
+
+        // 6. Create chart
+        const existingCanvas = document.getElementById('pieChart');
+        if (existingCanvas) existingCanvas.remove();
+
+        const canvas = document.createElement('canvas');
+        canvas.id = 'pieChart';
+        resultsContainer.appendChild(canvas);
+
+        const labels = chartData.map(item => item.label);
+        const values = chartData.map(item => item.value);
+        const colors = chartData.map(item => item.color);
+
+        const data = {
+            labels,
+            datasets: [{
+                label: 'Expenses Breakdown',
+                data: values,
+                backgroundColor: colors
+            }]
+        };
+
+        const config = {
+            type: 'pie',
+            data,
+            plugins: [ChartDataLabels],
+            options: {
+                plugins: {
+                    datalabels: {
                         color: '#fff',
-                        formatter: (value, context) => {
-                            const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
-                            return `£${value.toLocaleString()}\n(${percentage}%)`;
+                        formatter: (value, ctx) => {
+                            const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            const percent = ((value / total) * 100).toFixed(1);
+                            return `£${value.toLocaleString()}\n(${percent}%)`;
                         },
                         font: {
                             weight: 'bold',
                             size: 12
                         }
-                        },
-                        legend: {
+                    },
+                    legend: {
                         position: 'bottom'
-                        },
-                        tooltip: {
+                    },
+                    tooltip: {
                         callbacks: {
-                            label: (ctx) => {
-                            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                            const percentage = ((ctx.raw / total) * 100).toFixed(1);
-                            return `${ctx.label}: £${ctx.raw.toLocaleString()} (${percentage}%)`;
+                            label: ctx => {
+                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = ((ctx.raw / total) * 100).toFixed(1);
+                                return `${ctx.label}: £${ctx.raw.toLocaleString()} (${percent}%)`;
                             }
                         }
-                        }
                     }
-                    }
-                };
+                }
+            }
+        };
 
-                new Chart(
-                    document.getElementById('pieChart'),
-                    config
-                );
+        new Chart(canvas, config);
+        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-            
+    // Helper to build each result item
+    function createResultItem(labelText, valueText, valueClass = '', color = '', isTotal = false) {
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        if (isTotal) {
+            item.style.borderTop = `2px solid ${color}`;
+            item.style.paddingTop = '15px';
         }
+
+        const label = document.createElement('span');
+        label.className = 'result-label';
+        if (color) {
+            const box = document.createElement('span');
+            box.style.cssText = `display:inline-block;width:12px;height:12px;background:${color};border-radius:2px;margin-right:8px;`;
+            label.appendChild(box);
+        }
+        label.appendChild(document.createTextNode(labelText));
+
+        const value = document.createElement('span');
+        value.className = 'result-value';
+        if (valueClass) value.classList.add(valueClass);
+        if (color && isTotal) value.style.color = color;
+        if (isTotal) value.style.fontSize = '1.3rem';
+        value.textContent = valueText;
+
+        item.appendChild(label);
+        item.appendChild(value);
+        return item;
+    }
+
+    function getRandomColor() {
+        const palette = ['#f39c12', '#8e44ad', '#e74c3c', '#16a085', '#c0392b', '#2980b9', '#2ecc71', '#d35400'];
+        return palette[Math.floor(Math.random() * palette.length)];
+    }
+
 }
 
 
