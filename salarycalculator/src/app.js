@@ -4,8 +4,76 @@ import {calculateTakeHome, calculateUKTax} from './helpers.js'
 
 Chart.register(ChartDataLabels);
 
+// Navbar
+document.getElementById('toggle-btn').addEventListener('click', toggleMobileMenu)
+
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('active');
+}
+
+        // Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navbar = document.querySelector('.navbar');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+            
+    if (!navbar.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+    }
+});
+// Handle active states and navigation
+        document.querySelectorAll('.nav-link a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Only prevent default for placeholder links (#)
+                if (this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+                
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link's parent
+                this.parentElement.classList.add('active');
+                
+                // Close mobile menu after selection
+                document.getElementById('mobileMenu').classList.remove('active');
+            });
+        });
+ // Set active state based on current page URL (for when navigating between pages)
+        function setActiveBasedOnUrl() {
+            const currentPath = window.location.pathname;
+            const currentHash = window.location.hash;
+            
+            // Remove all active classes first
+            document.querySelectorAll('.nav-link').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class based on current URL
+            document.querySelectorAll('.nav-link a').forEach(link => {
+                const href = link.getAttribute('href');
+                
+                // Check if this link matches the current page
+                if (href === currentPath || 
+                    href === currentHash || 
+                    (currentPath === '/' && href === '#') ||
+                    currentPath.includes(href.replace('#', '').replace('/', ''))) {
+                    link.parentElement.classList.add('active');
+                }
+            });
+        }
+
+        // Call on page load
+        setActiveBasedOnUrl();
+        
+        // Also call when the page URL changes (for single-page apps)
+        window.addEventListener('popstate', setActiveBasedOnUrl);
 // FAQ section
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Page loaded, initializing...');
     const faqQuestions = document.querySelectorAll('.faq-question');
 
     faqQuestions.forEach(question => {

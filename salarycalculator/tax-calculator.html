@@ -7,6 +7,65 @@
   <title>UK Tax & Take-Home Calculator</title>
 </head>
 <body id="tax-calculator">
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">🇬🇧</div>
+                <div class="logo-text">
+                    <h1>UK Calculator</h1>
+                    <p>Tax & Salary Tools</p>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <ul class="nav-links">
+                <li class="nav-link ">
+                    <a href="/salary-to-hourly">💰 Salary Calculator</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/tax-calculator">📊 Tax Calculator</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/budget-planner">📈 Budget Planner</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/faq">❓ FAQ</a>
+                </li>
+            </ul>
+
+            <!-- CTA Button -->
+            <a href="#" class="nav-cta">
+                🚀 All Tools
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="toggle-btn" class="mobile-menu-toggle">
+                ☰
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <ul class="mobile-nav-links">
+                <li class="nav-link ">
+                    <a href="/salary-to-hourly">💰 Salary Calculator</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/tax-calculator">📊 Tax Calculator</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/budget-planner">📈 Budget Planner</a>
+                </li>
+                <li class="nav-link">
+                    <a href="/faq">❓ FAQ</a>
+                </li>
+            </ul>
+            <a href="#" class="nav-cta mobile-cta">
+                🚀 All Tools
+            </a>
+        </div>
+    </nav>
     <div class="container">
   <!-- Tax Calculator -->
         <div id="tax-calculator" class="calculator-page">
@@ -99,7 +158,54 @@
             
             <div id="tax-results"></div>
         </div>
+        <footer>
+                <div class="footer-content">
+                    <h3>UK Salary Calculator 2025/2026</h3>
+                    
+                    <div class="footer-links">
+                        <div class="footer-section">
+                            <h4>Calculators</h4>
+                            <ul>
+                                <li><a href="/salary-to-hourly">Salary to Hourly Calculator</a></li>
+                                <li><a href="/tax-calculator">UK Tax Calculator</a></li>
+                                <li><a href="/budget-planner">Budget Planner</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h4>Resources</h4>
+                            <ul>
+                                <li><a href="#faq">FAQ</a></li>
+                                <li><a href="https://www.gov.uk/income-tax-rates" target="_blank">Official UK Tax Rates</a></li>
+                                <li><a href="https://www.gov.uk/national-insurance-rates" target="_blank">National Insurance Rates</a></li>
+                                <li><a href="https://www.gov.uk/repaying-your-student-loan" target="_blank">Student Loan Info</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-section">
+                            <h4>About</h4>
+                            <p>Free UK salary and tax calculators updated for the 2025/26 tax year. Our tools help you understand your take-home pay, hourly rates, and budget planning with accurate calculations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="disclaimer">
+                        <strong>Disclaimer:</strong> The information on this site is intended for general guidance only. It should not be relied upon for making significant financial decisions. Please consult a qualified professional for personalized advice.
+                    </div>
+                    
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 UK Salary Calculator. All rights reserved. Made by <a href="https:/valentinewebsolutions.co.uk">Valentine Web Solutions</a></p>
+                        <p>Updated for 2025/26 UK tax year • Last updated: July 2025</p>
+                    </div>
+                </div>
+                    <div class="footer-bottom-links">
+                        <a href="#privacy">Privacy Policy</a>
+                        <a href="#terms">Terms of Service</a>
+                        <a href="#cookies">Cookie Policy</a>
+                    </div>
+                </div>
+        </footer>
     </div>
+
         <script type="module" src="/src/app.js" defer></script>
 </body>
 </html>
