@@ -4,6 +4,26 @@ import {calculateTakeHome, calculateUKTax} from './helpers.js'
 
 Chart.register(ChartDataLabels);
 
+// FAQ section
+document.addEventListener('DOMContentLoaded', () => {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector('.faq-toggle');
+
+            // Toggle active class on question and answer
+            question.classList.toggle('active');
+            answer.classList.toggle('active');
+
+            // Update toggle symbol
+            toggle.textContent = question.classList.contains('active') ? '−' : '+';
+        });
+    });
+});
+
 const currentPage = document.body.id;
 
 if (currentPage === "home") {
@@ -98,7 +118,7 @@ if (currentPage === "home") {
         }
 
   
-} else if (currentPage === 'tax-estimator'){
+} else if (currentPage === 'tax-calculator'){
         document.getElementById('calculate-tax').addEventListener('click', calculateTax)
 
         // Toggle comparison inputs for tax-calculator
@@ -491,7 +511,8 @@ function updateDeleteButton() {
                         color: '#fff',
                         formatter: (value, ctx) => {
                             const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            const percent = ((value / total) * 100).toFixed(1);
+                            const income = parseFloat(document.getElementById('monthly-income').value);
+                            const percent = ((value / income) * 100).toFixed(1);
                             return `£${value.toLocaleString()}\n(${percent}%)`;
                         },
                         font: {
