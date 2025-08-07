@@ -86,4 +86,11 @@
             };
         }
 
-        export {calculateTakeHome, calculateUKTax}
+        function scrollWithOffset(id, offset = 125) {
+            const element = document.getElementById(id);
+            const y = element.getBoundingClientRect().top + window.scrollY - offset;
+
+            window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+
+        export {calculateTakeHome, calculateUKTax, scrollWithOffset}

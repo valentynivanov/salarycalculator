@@ -1,35 +1,41 @@
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import {calculateTakeHome, calculateUKTax} from './helpers.js'
+import {calculateTakeHome, calculateUKTax, scrollWithOffset} from './helpers.js'
 
 Chart.register(ChartDataLabels);
 
-// Navbar
-document.getElementById('toggle-btn').addEventListener('click', toggleMobileMenu)
 
-function toggleMobileMenu() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
+
+// Set active state based on current page URL (for when navigating between pages)
+function setActiveBasedOnUrl() {
+    const currentPath = window.location.pathname;
+
+    document.querySelectorAll('.nav-link').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    document.querySelectorAll('.nav-link a').forEach(link => {
+        const href = link.getAttribute('href');
+
+        if (
+            href === currentPath ||
+            (href === '/' && currentPath === '/') ||
+            currentPath.endsWith(href)
+        ) {
+            link.parentElement.classList.add('active');
+        }
+    });
 }
 
-        // Close mobile menu when clicking outside
-document.addEventListener('click', function(event) {
-    const navbar = document.querySelector('.navbar');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const toggle = document.querySelector('.mobile-menu-toggle');
-            
-    if (!navbar.contains(event.target)) {
-        mobileMenu.classList.remove('active');
-    }
-});
-// Handle active states and navigation
+      
+// DOM Loaded
+document.addEventListener('DOMContentLoaded', () => {
+    
+    console.log('Page loaded, initializing...');
+    setActiveBasedOnUrl()
+    // Handle active states and navigation
         document.querySelectorAll('.nav-link a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Only prevent default for placeholder links (#)
-                if (this.getAttribute('href') === '#') {
-                    e.preventDefault();
-                }
-                
+            link.addEventListener('click', () => {
                 // Remove active class from all nav links
                 document.querySelectorAll('.nav-link').forEach(item => {
                     item.classList.remove('active');
@@ -42,38 +48,25 @@ document.addEventListener('click', function(event) {
                 document.getElementById('mobileMenu').classList.remove('active');
             });
         });
- // Set active state based on current page URL (for when navigating between pages)
-        function setActiveBasedOnUrl() {
-            const currentPath = window.location.pathname;
-            const currentHash = window.location.hash;
-            
-            // Remove all active classes first
-            document.querySelectorAll('.nav-link').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Add active class based on current URL
-            document.querySelectorAll('.nav-link a').forEach(link => {
-                const href = link.getAttribute('href');
-                
-                // Check if this link matches the current page
-                if (href === currentPath || 
-                    href === currentHash || 
-                    (currentPath === '/' && href === '#') ||
-                    currentPath.includes(href.replace('#', '').replace('/', ''))) {
-                    link.parentElement.classList.add('active');
-                }
-            });
-        }
+    // Navbar
+    document.getElementById('toggle-btn').addEventListener('click', toggleMobileMenu)
 
-        // Call on page load
-        setActiveBasedOnUrl();
-        
-        // Also call when the page URL changes (for single-page apps)
-        window.addEventListener('popstate', setActiveBasedOnUrl);
-// FAQ section
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Page loaded, initializing...');
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const navbar = document.querySelector('.navbar');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+                
+        if (!navbar.contains(event.target)) {
+            mobileMenu.classList.remove('active');
+        }
+    });
+    // FAQ section
     const faqQuestions = document.querySelectorAll('.faq-question');
 
     faqQuestions.forEach(question => {
@@ -157,13 +150,13 @@ if (currentPage === "home") {
                     results += `
                         <div class="comparison">
                             <div class="comparison-card">
-                                <h4>Job 1</h4>
+                                <h4>First Salary</h4>
                                 <p>£${salary.toLocaleString()} / year</p>
                                 <p>${hours} hours/week</p>
                                 <p><strong>£${hourlyRate.toFixed(2)}/hour</strong></p>
                             </div>
                             <div class="comparison-card">
-                                <h4>Job 2</h4>
+                                <h4>Second salary</h4>
                                 <p>£${salary2.toLocaleString()} / year</p>
                                 <p>${hours2} hours/week</p>
                                 <p><strong>£${hourlyRate2.toFixed(2)}/hour</strong></p>
@@ -182,7 +175,7 @@ if (currentPage === "home") {
             }
             
             document.getElementById('hourly-results').innerHTML = results;
-            document.getElementById('hourly-results').scrollIntoView({ behavior: "smooth", block:"start"});
+            scrollWithOffset('hourly-results');
         }
 
   
@@ -267,9 +260,9 @@ if (currentPage === "home") {
                 const monthRate2 = (taxCalc2.takeHome / 12);
                 const taxRate2 = taxCalc2.taxRate.toFixed(1);
 
-                const yearDifference = Math.abs(yearRate - yearRate2);
-                const monthDifference = Math.abs(monthRate - monthRate2);
-                const taxRateDifference = Math.abs(taxRate - taxRate2);
+                const yearDifference = (yearRate2 - yearRate);
+                const monthDifference = (monthRate2 - monthRate);
+                const taxRateDifference = Math.abs(taxRate2 - taxRate);
                 
                 const yearPercentDiff = Math.abs((yearRate2 - yearRate) / yearRate * 100).toFixed(2);
                 const monthPercentDiff = Math.abs((monthRate2 - monthRate) / monthRate * 100).toFixed(2);
@@ -315,14 +308,14 @@ if (currentPage === "home") {
                 <div class="results">
                             <div class="result-item">
                                 <span class="result-label">Annual Difference</span>
-                                <span class="result-value income">
-                                   £${yearDifference.toFixed(2)} (${yearPercentDiff}%)
+                                <span class="result-value ${yearDifference >= 0 ? 'income': "expenses"}">
+                                   ${yearDifference >= 0 ? '+': '-'}£${Math.abs(yearDifference.toFixed(2))} (${yearPercentDiff}%)
                                 </span>
                             </div>
                             <div class="result-item">
                                 <span class="result-label">Monthly Difference</span>
-                                <span class="result-value income">
-                                    £${monthDifference.toFixed(2)} (${monthPercentDiff}%)
+                                <span class="result-value ${monthDifference >= 0 ? 'income': "expenses"}">
+                                    ${monthDifference >= 0 ? '+': '-'}£${Math.abs(monthDifference.toFixed(2))} (${monthPercentDiff}%)
                                 </span>
                             </div>
                             <div class="result-item">
@@ -336,7 +329,7 @@ if (currentPage === "home") {
             }
 
             document.getElementById('tax-results').innerHTML = taxresults;
-            document.getElementById('tax-results').scrollIntoView({ behavior: "smooth", block:"start"});
+            scrollWithOffset('tax-results');
         }
 
 } else {
@@ -605,7 +598,7 @@ function updateDeleteButton() {
         };
 
         new Chart(canvas, config);
-        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scrollWithOffset('budget-results');
 }
 
     // Helper to build each result item
@@ -644,6 +637,7 @@ function updateDeleteButton() {
     }
 
 }
+
 
 
         
