@@ -12,6 +12,62 @@
     <meta property="og:description" content="Calculate your UK salary to hourly rate, after-tax income, and plan your budget with our free professional calculators. Updated for 2025/26 tax year.">
     <meta property="og:type" content="website">
     <link rel="icon" href="/src/images/favicon3.png">
+    <script>
+  // Check for consent cookie
+  function hasConsent() {
+    return document.cookie.includes('ga_consent=true');
+  }
+
+  // Save consent and load GA
+  function acceptCookies() {
+    document.cookie = "ga_consent=true; path=/; max-age=31536000"; // 1 year
+    loadGA();
+    hideBanner();
+  }
+
+  // Hide consent banner
+  function hideBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  // Load GA script dynamically
+  function loadGA() {
+    if (window.gaLoaded) return; // avoid multiple loads
+    window.gaLoaded = true;
+
+    const gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-ELYTNDXR2M"; 
+    document.head.appendChild(gtagScript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', 'G-ELYTNDXR2M');
+  }
+
+  // On page load
+  document.addEventListener('DOMContentLoaded', () => {
+    if (hasConsent()) {
+      loadGA();
+      hideBanner();
+    } else {
+      // Show banner
+      const banner = document.createElement('div');
+      banner.id = 'cookie-banner';
+      banner.style = 'position:fixed;bottom:0;left:0;right:0;background:#222;color:#fff;padding:1em;text-align:center;z-index:9999;';
+      banner.innerHTML = `
+        We use cookies for analytics. 
+        <button id="accept-ga">Accept</button>
+      `;
+      document.body.appendChild(banner);
+      document.getElementById('accept-ga').onclick = acceptCookies;
+    }
+  });
+</script>
+
 </head>
 <body id="home">
     <nav class="navbar">
