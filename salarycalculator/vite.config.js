@@ -7,7 +7,8 @@ export default defineConfig({
         main: 'index.html',
         salary: 'salary-to-hourly.html',
         tax: 'tax-calculator.html',
-        budget: 'budget-planner.html'
+        budget: 'budget-planner.html',
+        terms: 'terms.html'
       }
     }
   }
