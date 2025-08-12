@@ -574,12 +574,20 @@
             gap: 15px;
         }
 
-        #pieChart {
+        #chartContainer{
             width: 700px;
             height: 700px;
             margin: 20px auto;
             position: relative;
+            overflow: visible;
         }
+
+        /* #pieChart {
+            width: 700px;
+            height: 850px;
+            margin: 20px auto;
+            position: relative;
+        } */
 
         .budget-btns{
             background: #3498db;
@@ -808,7 +816,7 @@
         .footer-bottom a,.footer-bottom-links a{
             color: #7f8c8d;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: color 0.3s ease;
         }
 

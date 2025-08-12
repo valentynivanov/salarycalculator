@@ -547,7 +547,10 @@ function updateDeleteButton() {
 
         const canvas = document.createElement('canvas');
         canvas.id = 'pieChart';
-        resultsContainer.appendChild(canvas);
+        const chartContainer = document.createElement('div');
+        chartContainer.id = 'chartContainer'
+        chartContainer.appendChild(canvas)
+        resultsContainer.appendChild(chartContainer);
 
         const labels = chartData.map(item => item.label);
         const values = chartData.map(item => item.value);
@@ -567,32 +570,69 @@ function updateDeleteButton() {
             data,
             plugins: [ChartDataLabels],
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: 20
+                },
                 plugins: {
-                    datalabels: {
-                        color: '#fff',
-                        formatter: (value, ctx) => {
-                            const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            const income = parseFloat(document.getElementById('monthly-income').value);
-                            const percent = ((value / income) * 100).toFixed(1);
-                            return `£${value.toLocaleString()}\n(${percent}%)`;
-                        },
-                        font: {
-                            weight: 'bold',
-                            size: 12
-                        }
+                datalabels: {
+                    color: '#fff',
+                    font: {
+                    weight: 'bold',
+                    size: 14
                     },
-                    legend: {
-                        position: 'bottom'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: ctx => {
-                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                                const percent = ((ctx.raw / total) * 100).toFixed(1);
-                                return `${ctx.label}: £${ctx.raw.toLocaleString()} (${percent}%)`;
-                            }
+                    formatter: (value, ctx) => {
+                        const total = ctx.chart.data.datasets[0].data
+                            .reduce((a, b) => a + b, 0) || 1;
+                        const percent = (value / total) * 100;
+
+                        // Hide labels if slice is < 10% (change to 5 if needed)
+                        if (percent < 5) {
+                            return '';
                         }
+
+                        return `£${value.toLocaleString()}\n(${percent.toFixed(1)}%)`;
+                    },
+                    backgroundColor: (ctx) => {
+                        const total = ctx.chart.data.datasets[0].data
+                            .reduce((a, b) => a + b, 0);
+                        const sliceValue = ctx.dataset.data[ctx.dataIndex];
+                        const percent = (sliceValue / total) * 100;
+                        return percent >= 5 ? 'rgba(0,0,0,0.5)' : null;
+                    },
+                    anchor: 'center', // Changed to 'center' to position labels closer to the slice
+                    align: 'center', // Aligns labels outside the slice
+                    offset: 30, // Increased offset to move labels further out
+                    clamp: false, // Allow labels to extend beyond chart area
+                    clip: false, // Prevent clipping to ensure labels are visible
+                    borderRadius: 4,
+                    padding: 6,
+                    textAlign: 'center',
+                    rotation: 0 // Removed dynamic rotation to keep labels right-side up
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                    color: '#333',
+                    font: {
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    usePointStyle: true,
+                    boxWidth: 20,
+                    padding: 20
                     }
+                },
+                tooltip: {
+                    callbacks: {
+                    label: ctx => {
+                        const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                        const percent = ((ctx.raw / total) * 100).toFixed(1);
+                        return `${ctx.label}: £${ctx.raw.toLocaleString()} (${percent}%)`;
+                    }
+                    }
+                }
                 }
             }
         };
