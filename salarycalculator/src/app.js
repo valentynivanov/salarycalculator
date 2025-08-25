@@ -565,6 +565,8 @@ function updateDeleteButton() {
             }]
         };
 
+        const isMobile = window.innerWidth < 768;
+
         const config = {
             type: 'pie',
             data,
@@ -601,9 +603,9 @@ function updateDeleteButton() {
                         const percent = (sliceValue / total) * 100;
                         return percent >= 5 ? 'rgba(0,0,0,0.5)' : null;
                     },
-                    anchor: 'center', // Changed to 'center' to position labels closer to the slice
-                    align: 'center', // Aligns labels outside the slice
-                    offset: 30, // Increased offset to move labels further out
+                    anchor:  'center', // Changed to 'center' to position labels closer to the slice
+                    align: isMobile ? 'end' : 'center', // Aligns labels outside the slice
+                    offset: isMobile ? 5 : 30, // Increased offset to move labels further out
                     clamp: false, // Allow labels to extend beyond chart area
                     clip: false, // Prevent clipping to ensure labels are visible
                     borderRadius: 4,

@@ -1,0 +1,17 @@
+# robots.txt for salaryaftertaxuk.co.uk
+
+# Allow all crawlers
+User-agent: *
+
+# Block common non-SEO pages (already noindex in meta but safe to disallow crawling)
+Disallow: /contact
+Disallow: /terms
+
+# Block unnecessary system files (adjust if you don’t use these)
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /admin/
+Disallow: /scripts/
+
+# Sitemap location
+Sitemap: https://salaryaftertaxuk.co.uk/sitemap.xml

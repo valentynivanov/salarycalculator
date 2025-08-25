@@ -1,5 +1,6 @@
 1. Fix logo - corners, make bigger - done ✅
 2. Pie chart - make numbers not stack on each other - done ✅
+3. Added GA and donation link - done ✅
 3. Check responsiveness 
 4. Fonts, spacing, colors 
 5. Check all links 
