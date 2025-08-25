@@ -179,12 +179,12 @@ if (currentPage === "home") {
         }
 
   
-} else if (currentPage === 'tax-calculator'){
+} else if (currentPage === 'take-home-pay'){
         document.getElementById('calculate-tax').addEventListener('click', calculateTax)
 
-        // Toggle comparison inputs for tax-calculator
-        document.getElementById('tax-calculator-compare-salaries').addEventListener('change', function() {
-            document.getElementById('tax-calculator-comparison').style.display = 
+        // Toggle comparison inputs for take-home-pay
+        document.getElementById('take-home-pay-compare-salaries').addEventListener('change', function() {
+            document.getElementById('take-home-pay-comparison').style.display = 
                 this.checked ? 'block' : 'none';
         });
 
@@ -194,7 +194,7 @@ if (currentPage === "home") {
             const age = document.getElementById('age').value;
             const pensionPercent = parseFloat(document.getElementById('pension-percent').value) || 0;
             const studentLoan = document.getElementById('student-loan').value;
-            const compareSalaries = document.getElementById('tax-calculator-compare-salaries').checked;
+            const compareSalaries = document.getElementById('take-home-pay-compare-salaries').checked;
             
             if (!salary) {
                 alert('Please enter your salary');
