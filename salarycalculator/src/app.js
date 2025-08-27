@@ -48,13 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('mobileMenu').classList.remove('active');
             });
         });
-    // Navbar
-    document.getElementById('toggle-btn').addEventListener('click', toggleMobileMenu)
-
-    function toggleMobileMenu() {
-        const mobileMenu = document.getElementById('mobileMenu');
+    // Mobile menu
+    const toggleBtn = document.getElementById('toggle-btn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    toggleBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
-    }
+        if (mobileMenu.classList.contains('active')) {
+            toggleBtn.textContent = '✕';
+        } else {
+            toggleBtn.textContent = '☰';
+        }
+    })
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
