@@ -131,7 +131,7 @@
             display: none;
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.9rem;
             color: #2c3e50;
             cursor: pointer;
             padding: 8px;
@@ -975,10 +975,6 @@
                 font-size: 1.3rem;
             }
 
-            .logo-text p {
-                font-size: 0.8rem;
-            }
-
             .nav-links {
                 display: none;
             }
@@ -1011,13 +1007,6 @@
             .nav-container {
                 padding: 0 10px;
             }
-            .logo-text p {
-                font-size: 0.75rem;
-            }
-            .logo-text h1 {
-                font-size: 1.1rem;
-            }
-
             .contact-content {
                 padding: 25px;
             }
