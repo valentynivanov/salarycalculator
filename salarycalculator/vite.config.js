@@ -6,6 +6,7 @@ export default defineConfig({
       input: {
         main: 'index.html',
         salary: 'salary-to-hourly.html',
+        hourly: 'hourly-to-salary.html',
         tax: 'take-home-pay.html',
         budget: 'budget-planner.html',
         terms: 'terms.html',

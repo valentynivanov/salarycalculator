@@ -108,7 +108,10 @@ if (currentPage === "home") {
         function calculateHourly() {
             const salary = parseFloat(document.getElementById('annual-salary').value);
             const hours = parseFloat(document.getElementById('weekly-hours').value);
-            const showAfterTax = document.getElementById('show-after-tax').checked;
+            const showDailyRate = document.getElementById('show-daily-pay').checked;
+            const showWeeklyRate = document.getElementById('show-weekly-pay').checked;
+            const showMonthlyRate = document.getElementById('show-monthly-pay').checked;
+            // const showAfterTax = document.getElementById('show-after-tax').checked;
             const compareSalaries = document.getElementById('compare-salaries').checked;
             
             if (!salary || !hours) {
@@ -118,6 +121,9 @@ if (currentPage === "home") {
             
             const weeksPerYear = 52;
             const hourlyRate = salary / (hours * weeksPerYear);
+            const dailyRate = (salary / weeksPerYear) / 5;
+            const weeklyPay = salary / hours;
+            const monthlyPay = salary / 12;
             
             let results = `
                 <div class="results">
@@ -127,8 +133,30 @@ if (currentPage === "home") {
                         <span class="result-value">£${hourlyRate.toFixed(2)}</span>
                     </div>
             `;
+
+            if(showDailyRate){
+                results += `<div class="result-item">
+                        <span class="result-label">Daily Rate (Gross)</span>
+                        <span id='daily-rate' class="result-value">£${dailyRate.toFixed(2)}</span>
+                    </div> `
+            }
+            if(showWeeklyRate){
+                results += `<div class="result-item">
+                        <span class="result-label">Weekly Pay (Gross)</span>
+                        <span id='weekly-rate' class="result-value">£${weeklyPay.toFixed(2)}</span>
+                    </div>`
+            }
+            if(showMonthlyRate){
+                results += `   
+                    
+                    <div class="result-item">
+                        <span class="result-label">Monthly Pay (Gross)</span>
+                        <span id='monthly-rate' class="result-value">£${monthlyPay.toFixed(2)}</span>
+                    </div>
+                `
+            }
             
-            if (showAfterTax) {
+            /* if (showAfterTax) {
                 // Rough after-tax calculation (simplified)
                 const estimatedTakeHome = calculateTakeHome(salary);
                 const afterTaxHourly = estimatedTakeHome / (hours * weeksPerYear);
@@ -138,43 +166,59 @@ if (currentPage === "home") {
                         <span class="result-value">£${afterTaxHourly.toFixed(2)}</span>
                     </div>
                 `;
-            }
+            } */
             
             results += `</div>`;
             
-            if (compareSalaries) {
-                const salary2 = parseFloat(document.getElementById('annual-salary-2').value);
-                const hours2 = parseFloat(document.getElementById('weekly-hours-2').value);
-                
-                if (salary2 && hours2) {
-                    const hourlyRate2 = salary2 / (hours2 * weeksPerYear);
-                    const difference = hourlyRate2 - hourlyRate;
-                    const percentDiff = ((hourlyRate2 - hourlyRate) / hourlyRate * 100).toFixed(1);
-                    
-                    results += `
-                        <div class="comparison">
-                            <div class="comparison-card">
-                                <h4>First Salary</h4>
-                                <p>£${salary.toLocaleString()} / year</p>
-                                <p>${hours} hours/week</p>
-                                <p><strong>£${hourlyRate.toFixed(2)}/hour</strong></p>
-                            </div>
-                            <div class="comparison-card">
-                                <h4>Second salary</h4>
-                                <p>£${salary2.toLocaleString()} / year</p>
-                                <p>${hours2} hours/week</p>
-                                <p><strong>£${hourlyRate2.toFixed(2)}/hour</strong></p>
-                            </div>
+        if (compareSalaries) {
+            const salary2 = parseFloat(document.getElementById('annual-salary-2').value);
+            const hours2 = parseFloat(document.getElementById('weekly-hours-2').value);
+
+            if (salary2 && hours2) {
+                const hourlyRate2 = salary2 / (hours2 * weeksPerYear);
+                const dailyRate2 = (salary2 / weeksPerYear) / 5;
+                const weeklyPay2 = salary2 / hours2;
+                const monthlyPay2 = salary2 / 12;
+
+                const rateDiff = (a, b) => (b - a).toFixed(2);
+                const percentDiff = (a, b) => ((b - a) / a * 100).toFixed(1);
+
+                results += `
+                    <div class="comparison">
+                        <div class="comparison-card">
+                            <h4>First Salary</h4>
+                            <p>£${salary.toLocaleString()}/year</p>
+                            <p>${hours} hours/week</p>
+                            <p><strong>£${hourlyRate.toFixed(2)}/hour</strong></p>
+                            ${showDailyRate ? `<p>£${dailyRate.toFixed(2)}/day</p>` : ""}
+                            ${showWeeklyRate ? `<p>£${weeklyPay.toFixed(2)}/week</p>` : ""}
+                            ${showMonthlyRate ? `<p>£${monthlyPay.toFixed(2)}/month</p>` : ""}
                         </div>
-                        <div class="results">
-                            <div class="result-item">
-                                <span class="result-label">Hourly Rate Difference</span>
-                                <span class="result-value ${difference >= 0 ? '' : 'text-danger'}">
-                                    ${difference >= 0 ? '+' : ''}£${difference.toFixed(2)} (${percentDiff}%)
-                                </span>
-                            </div>
+                        <div class="comparison-card">
+                            <h4>Second Salary</h4>
+                            <p>£${salary2.toLocaleString()}/year</p>
+                            <p>${hours2} hours/week</p>
+                            <p><strong>£${hourlyRate2.toFixed(2)}/hour</strong></p>
+                            ${showDailyRate ? `<p>£${dailyRate2.toFixed(2)}/day</p>` : ""}
+                            ${showWeeklyRate ? `<p>£${weeklyPay2.toFixed(2)}/week</p>` : ""}
+                            ${showMonthlyRate ? `<p>£${monthlyPay2.toFixed(2)}/month</p>` : ""}
                         </div>
-                    `;
+                    </div>
+                    <div class="results">
+                        <h3>Comparison Results</h3>
+                        <div class="result-item"><span class="result-label">Hourly Difference</span><span class="result-value ${hourlyRate2 >= hourlyRate ? 'income' : 'expenses'}">${hourlyRate2 >= hourlyRate ? '+' : '-'}£${Math.abs(rateDiff(hourlyRate, hourlyRate2))} (${percentDiff(hourlyRate, hourlyRate2)}%)</span></div>
+                `;
+
+                if (showDailyRate)
+                    results += `<div class="result-item"><span class="result-label">Daily Difference</span><span class="result-value ${dailyRate2 >= dailyRate ? 'income' : 'expenses'}">${dailyRate2 >= dailyRate ? '+' : '-'}£${Math.abs(rateDiff(dailyRate, dailyRate2))} (${percentDiff(dailyRate, dailyRate2)}%)</span></div>`;
+                if (showWeeklyRate)
+                    results += `<div class="result-item"><span class="result-label">Weekly Difference</span><span class="result-value ${weeklyPay2 >= weeklyPay ? 'income' : 'expenses'}">${weeklyPay2 >= weeklyPay ? '+' : '-'}£${Math.abs(rateDiff(weeklyPay, weeklyPay2))} (${percentDiff(weeklyPay, weeklyPay2)}%)</span></div>`;
+                if (showMonthlyRate)
+                    results += `<div class="result-item"><span class="result-label">Monthly Difference</span><span class="result-value ${monthlyPay2 >= monthlyPay ? 'income' : 'expenses'}">${monthlyPay2 >= monthlyPay ? '+' : '-'}£${Math.abs(rateDiff(monthlyPay, monthlyPay2))} (${percentDiff(monthlyPay, monthlyPay2)}%)</span></div>`;
+                    // Show annual difference as well
+                    results += `<div class="result-item"><span class="result-label">Annual Difference</span><span class="result-value ${salary2 >= salary ? 'income' : 'expenses'}">${salary2 >= salary ? '+' : '-'}£${Math.abs(rateDiff(salary, salary2))} (${percentDiff(salary, salary2)}%)</span></div>`;
+
+                results += `</div>`;
                 }
             }
             
@@ -182,6 +226,126 @@ if (currentPage === "home") {
             scrollWithOffset('hourly-results');
         }
 
+        // Hourly to salary page
+} else if (currentPage === "hourly-to-salary") {
+
+        document.getElementById('hourly-to-salary-calculate').addEventListener('click', calculateHourlyToSalary)
+
+    // Toggle comparison inputs for hourly-to-salary
+        document.getElementById('compare-hourly-to-salary').addEventListener('change', function() {
+            document.getElementById('comparison-inputs-hourly-to-salary').style.display = 
+                this.checked ? 'block' : 'none';
+        });
+  
+        // Salary to Hourly Calculator
+        function calculateHourlyToSalary() {
+            const salaryPerHour = parseFloat(document.getElementById('salary-per-hour').value);
+            const hoursWeekly = parseFloat(document.getElementById('hours-weekly').value);
+            const showDailyRate = document.getElementById('show-daily-pay-to-hourly').checked;
+            const showWeeklyRate = document.getElementById('show-weekly-pay-to-hourly').checked;
+            const showMonthlyRate = document.getElementById('show-monthly-pay-to-hourly').checked;
+            const compareSalariesToHourly = document.getElementById('compare-hourly-to-salary').checked;
+            
+            if (!salaryPerHour || !hoursWeekly) {
+                alert('Please enter both salary and weekly hours');
+                return;
+            }
+            
+            const weeksPerYear = 52;
+            const annualSalary = salaryPerHour * (hoursWeekly * weeksPerYear);
+            const weeklySalary = salaryPerHour * hoursWeekly;
+            const monthlySalary = annualSalary / 12;
+            const dailySalary = annualSalary / weeksPerYear / 5;
+            
+            let results = `
+                <div class="results">
+                    <h3>Salary Analysis</h3>
+                    
+            `;
+            
+             if(showDailyRate){
+                results += `<div class="result-item">
+                        <span class="result-label">Daily Rate (Gross)</span>
+                        <span id='daily-rate' class="result-value">£${dailySalary.toFixed(2)}</span>
+                    </div> `
+            }
+            if(showWeeklyRate){
+                results += `<div class="result-item">
+                        <span class="result-label">Weekly Pay (Gross)</span>
+                        <span id='weekly-rate' class="result-value">£${weeklySalary.toFixed(2)}</span>
+                    </div>`
+            }
+            if(showMonthlyRate){
+                results += `   
+                    
+                    <div class="result-item">
+                        <span class="result-label">Monthly Pay (Gross)</span>
+                        <span id='monthly-rate' class="result-value">£${monthlySalary.toFixed(2)}</span>
+                    </div>
+                `
+            }
+
+            results += `<div class="result-item">
+                        <span class="result-label">Annual Salary</span>
+                        <span class="result-value">£${annualSalary.toLocaleString()}</span>
+                    </div>
+            </div>`;
+            
+            if (compareSalariesToHourly) {
+                const salaryPerHour2 = parseFloat(document.getElementById('salary-per-hour-2').value);
+                const hoursWeekly2 = parseFloat(document.getElementById('hours-weekly-2').value);
+                
+                if (salaryPerHour2 && hoursWeekly2) {
+                    const annualSalary2 = salaryPerHour2 * (hoursWeekly2 * weeksPerYear);
+                    const weeklySalary2 = salaryPerHour2 * hoursWeekly2;
+                    const monthlySalary2 = annualSalary2 / 12;
+                    const dailySalary2 = annualSalary2 / weeksPerYear / 5;
+
+                    const rateDiff = (a, b) => (b - a).toFixed(2);
+                    const percentDiff = (a, b) => ((b - a) / a * 100).toFixed(1);
+
+                    results += `
+                        <div class="comparison">
+                            <div class="comparison-card">
+                                <h4>First Salary</h4>
+                                <p>£${salaryPerHour.toLocaleString()}/hour</p>
+                                <p>${hoursWeekly} hours/week</p>
+                                ${showDailyRate ? `<p>£${dailySalary.toFixed(2)}/day</p>` : ""}
+                                ${showWeeklyRate ? `<p>£${weeklySalary.toFixed(2)}/week</p>` : ""}
+                                ${showMonthlyRate ? `<p>£${monthlySalary.toFixed(2)}/month</p>` : ""}
+                                <p><strong>£${annualSalary.toLocaleString()}/year</strong></p>
+                            </div>
+                            <div class="comparison-card">
+                                <h4>Second salary</h4>
+                                <p>£${salaryPerHour2.toLocaleString()}/hour</p>
+                                <p>${hoursWeekly2} hours/week</p>
+                                ${showDailyRate ? `<p>£${dailySalary2.toFixed(2)}/day</p>` : ""}
+                                ${showWeeklyRate ? `<p>£${weeklySalary2.toFixed(2)}/week</p>` : ""}
+                                ${showMonthlyRate ? `<p>£${monthlySalary2.toFixed(2)}/month</p>` : ""}
+                                <p><strong>£${annualSalary2.toLocaleString()}/year</strong></p>
+                            </div>
+                        </div>
+                        <div class="results">
+                                <h3>Comparison Results</h3>
+                                <div class="result-item"><span class="result-label">Hourly Difference</span><span class="result-value ${salaryPerHour2 >= salaryPerHour ? 'income' : 'expenses'}">${salaryPerHour2 >= salaryPerHour ? '+' : '-'}£${Math.abs(rateDiff(salaryPerHour, salaryPerHour2))} (${percentDiff(salaryPerHour, salaryPerHour2)}%)</span></div>
+                    `;
+
+                    if (showDailyRate)
+                    results += `<div class="result-item"><span class="result-label">Daily Difference</span><span class="result-value ${dailySalary2>= dailySalary ? 'income' : 'expenses'}">${dailySalary2>= dailySalary ? '+' : '-'}£${Math.abs(rateDiff(dailySalary, dailySalary2))} (${percentDiff(dailySalary, dailySalary2)}%)</span></div>`;
+                    if (showWeeklyRate)
+                        results += `<div class="result-item"><span class="result-label">Weekly Difference</span><span class="result-value ${weeklySalary2 >= weeklySalary ? 'income' : 'expenses'}">${weeklySalary2 >= weeklySalary ? '+' : '-'}£${Math.abs(rateDiff(weeklySalary, weeklySalary2))} (${percentDiff(weeklySalary, weeklySalary2)}%)</span></div>`;
+                    if (showMonthlyRate)
+                        results += `<div class="result-item"><span class="result-label">Monthly Difference</span><span class="result-value ${monthlySalary2 >= monthlySalary ? 'income' : 'expenses'}">${monthlySalary2 >= monthlySalary ? '+' : '-'}£${Math.abs(rateDiff(monthlySalary, monthlySalary2))} (${percentDiff(monthlySalary, monthlySalary2)}%)</span></div>`;
+                        // Show annual difference as well
+                        results += `<div class="result-item"><span class="result-label">Annual Difference</span><span class="result-value ${annualSalary2 >= annualSalary ? 'income' : 'expenses'}">${annualSalary2 >= annualSalary ? '+' : '-'}£${Math.abs(rateDiff(annualSalary, annualSalary2))} (${percentDiff(annualSalary, annualSalary2)}%)</span></div>`;
+
+                    results += `</div>`;
+                }
+            }
+            
+            document.getElementById('hourly-to-salary-results').innerHTML = results;
+            scrollWithOffset('hourly-to-salary-results');
+        }
   
 } else if (currentPage === 'take-home-pay'){
         document.getElementById('calculate-tax').addEventListener('click', calculateTax)
