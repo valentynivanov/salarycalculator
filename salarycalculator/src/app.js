@@ -111,120 +111,163 @@ if (currentPage === "home") {
             const showDailyRate = document.getElementById('show-daily-pay').checked;
             const showWeeklyRate = document.getElementById('show-weekly-pay').checked;
             const showMonthlyRate = document.getElementById('show-monthly-pay').checked;
-            // const showAfterTax = document.getElementById('show-after-tax').checked;
             const compareSalaries = document.getElementById('compare-salaries').checked;
-            
+
             if (!salary || !hours) {
                 alert('Please enter both salary and weekly hours');
                 return;
             }
-            
+
             const weeksPerYear = 52;
-            const hourlyRate = salary / (hours * weeksPerYear);
-            const dailyRate = (salary / weeksPerYear) / 5;
-            const weeklyPay = salary / hours;
-            const monthlyPay = salary / 12;
-            
+
+            // Helper to compute all rates
+            const computeRates = (annual, weeklyHours) => {
+                const gross = {
+                    annual,
+                    monthly: annual / 12,
+                    weekly: annual / weeksPerYear,
+                    daily: (annual / weeksPerYear) / 5,
+                    hourly: annual / (weeklyHours * weeksPerYear),
+                };
+                const takeHome = calculateTakeHome(annual);
+                const net = {
+                    annual: takeHome,
+                    monthly: takeHome / 12,
+                    weekly: takeHome / weeksPerYear,
+                    daily: takeHome / (weeksPerYear * 5),
+                    hourly: takeHome / (weeklyHours * weeksPerYear),
+                };
+                return { gross, net };
+            };
+
+            const first = computeRates(salary, hours);
+
+            const columns = [
+                { label: "Hourly", key: "hourly", show: true },
+                { label: "Daily", key: "daily", show: showDailyRate },
+                { label: "Weekly", key: "weekly", show: showWeeklyRate },
+                { label: "Monthly", key: "monthly", show: showMonthlyRate },
+                { label: "Annual", key: "annual", show: true },
+            ];
+
             let results = `
                 <div class="results">
-                    <h3>Salary Analysis</h3>
-                    <div class="result-item">
-                        <span class="result-label">Hourly Rate (Gross)</span>
-                        <span class="result-value">£${hourlyRate.toFixed(2)}</span>
-                    </div>
+                    <h3>Salary Breakdown</h3>
+                    <table class="salary-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                ${columns.filter(c => c.show).map(c => `<th>${c.label}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Gross Pay</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td>£${first.gross[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>After Tax (Net)</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td class="income">£${first.net[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             `;
 
-            if(showDailyRate){
-                results += `<div class="result-item">
-                        <span class="result-label">Daily Rate (Gross)</span>
-                        <span id='daily-rate' class="result-value">£${dailyRate.toFixed(2)}</span>
-                    </div> `
-            }
-            if(showWeeklyRate){
-                results += `<div class="result-item">
-                        <span class="result-label">Weekly Pay (Gross)</span>
-                        <span id='weekly-rate' class="result-value">£${weeklyPay.toFixed(2)}</span>
-                    </div>`
-            }
-            if(showMonthlyRate){
-                results += `   
-                    
-                    <div class="result-item">
-                        <span class="result-label">Monthly Pay (Gross)</span>
-                        <span id='monthly-rate' class="result-value">£${monthlyPay.toFixed(2)}</span>
-                    </div>
-                `
-            }
-            
-            /* if (showAfterTax) {
-                // Rough after-tax calculation (simplified)
-                const estimatedTakeHome = calculateTakeHome(salary);
-                const afterTaxHourly = estimatedTakeHome / (hours * weeksPerYear);
-                results += `
-                    <div class="result-item">
-                        <span class="result-label">Hourly Rate (After Tax - Est.)</span>
-                        <span class="result-value">£${afterTaxHourly.toFixed(2)}</span>
-                    </div>
-                `;
-            } */
-            
-            results += `</div>`;
-            
-        if (compareSalaries) {
-            const salary2 = parseFloat(document.getElementById('annual-salary-2').value);
-            const hours2 = parseFloat(document.getElementById('weekly-hours-2').value);
+            if (compareSalaries) {
+                const salary2 = parseFloat(document.getElementById('annual-salary-2').value);
+                const hours2 = parseFloat(document.getElementById('weekly-hours-2').value);
 
-            if (salary2 && hours2) {
-                const hourlyRate2 = salary2 / (hours2 * weeksPerYear);
-                const dailyRate2 = (salary2 / weeksPerYear) / 5;
-                const weeklyPay2 = salary2 / hours2;
-                const monthlyPay2 = salary2 / 12;
-
-                const rateDiff = (a, b) => (b - a).toFixed(2);
-                const percentDiff = (a, b) => ((b - a) / a * 100).toFixed(1);
-
-                results += `
-                    <div class="comparison">
-                        <div class="comparison-card">
-                            <h4>First Salary</h4>
-                            <p>£${salary.toLocaleString()}/year</p>
-                            <p>${hours} hours/week</p>
-                            <p><strong>£${hourlyRate.toFixed(2)}/hour</strong></p>
-                            ${showDailyRate ? `<p>£${dailyRate.toFixed(2)}/day</p>` : ""}
-                            ${showWeeklyRate ? `<p>£${weeklyPay.toFixed(2)}/week</p>` : ""}
-                            ${showMonthlyRate ? `<p>£${monthlyPay.toFixed(2)}/month</p>` : ""}
-                        </div>
-                        <div class="comparison-card">
-                            <h4>Second Salary</h4>
-                            <p>£${salary2.toLocaleString()}/year</p>
-                            <p>${hours2} hours/week</p>
-                            <p><strong>£${hourlyRate2.toFixed(2)}/hour</strong></p>
-                            ${showDailyRate ? `<p>£${dailyRate2.toFixed(2)}/day</p>` : ""}
-                            ${showWeeklyRate ? `<p>£${weeklyPay2.toFixed(2)}/week</p>` : ""}
-                            ${showMonthlyRate ? `<p>£${monthlyPay2.toFixed(2)}/month</p>` : ""}
-                        </div>
-                    </div>
-                    <div class="results">
-                        <h3>Comparison Results</h3>
-                        <div class="result-item"><span class="result-label">Hourly Difference</span><span class="result-value ${hourlyRate2 >= hourlyRate ? 'income' : 'expenses'}">${hourlyRate2 >= hourlyRate ? '+' : '-'}£${Math.abs(rateDiff(hourlyRate, hourlyRate2))} (${percentDiff(hourlyRate, hourlyRate2)}%)</span></div>
-                `;
-
-                if (showDailyRate)
-                    results += `<div class="result-item"><span class="result-label">Daily Difference</span><span class="result-value ${dailyRate2 >= dailyRate ? 'income' : 'expenses'}">${dailyRate2 >= dailyRate ? '+' : '-'}£${Math.abs(rateDiff(dailyRate, dailyRate2))} (${percentDiff(dailyRate, dailyRate2)}%)</span></div>`;
-                if (showWeeklyRate)
-                    results += `<div class="result-item"><span class="result-label">Weekly Difference</span><span class="result-value ${weeklyPay2 >= weeklyPay ? 'income' : 'expenses'}">${weeklyPay2 >= weeklyPay ? '+' : '-'}£${Math.abs(rateDiff(weeklyPay, weeklyPay2))} (${percentDiff(weeklyPay, weeklyPay2)}%)</span></div>`;
-                if (showMonthlyRate)
-                    results += `<div class="result-item"><span class="result-label">Monthly Difference</span><span class="result-value ${monthlyPay2 >= monthlyPay ? 'income' : 'expenses'}">${monthlyPay2 >= monthlyPay ? '+' : '-'}£${Math.abs(rateDiff(monthlyPay, monthlyPay2))} (${percentDiff(monthlyPay, monthlyPay2)}%)</span></div>`;
-                    // Show annual difference as well
-                    results += `<div class="result-item"><span class="result-label">Annual Difference</span><span class="result-value ${salary2 >= salary ? 'income' : 'expenses'}">${salary2 >= salary ? '+' : '-'}£${Math.abs(rateDiff(salary, salary2))} (${percentDiff(salary, salary2)}%)</span></div>`;
-
-                results += `</div>`;
+                if (!salary2 || !hours2) {
+                    alert('Please enter both salary and weekly hours for the second job');
+                    return;
                 }
-            }
+
+                const second = computeRates(salary2, hours2);
+
+                results += `
+                    <div class="results">
+                        <h3>Salary Comparison</h3>
+                        <table class="salary-table comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    ${columns.filter(c => c.show).map(c => `<th>${c.label}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1st Salary (Gross)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => `<td>£${first.gross[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>2nd Salary (Gross)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => `<td>£${second.gross[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>Difference (Gross)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => {
+                                        const diff = second.gross[c.key] - first.gross[c.key];
+                                        const cls = diff >= 0 ? 'income' : 'expenses';
+                                        return `<td class="${cls}">${diff >= 0 ? '+' : '-'}£${Math.abs(diff).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`;
+                                    }).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>1st Salary (Net)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => `<td>£${first.net[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>2nd Salary (Net)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => `<td>£${second.net[c.key].toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td><strong>Difference (Net)</strong></td>
+                                    ${columns.filter(c => c.show).map(c => {
+                                        const diff = second.net[c.key] - first.net[c.key];
+                                        const cls = diff >= 0 ? 'income' : 'expenses';
+                                        return `<td class="${cls}">${diff >= 0 ? '+' : '-'}£${Math.abs(diff).toLocaleString(undefined, {maximumFractionDigits: 2})}</td>`;
+                                    }).join('')}
+                                </tr>
+                            </tbody>
+                        </table>
+                `;
             
+                 // --- Summary inside same block ---
+                const gross1 = first.gross.annual;
+                const gross2 = second.gross.annual;
+                const net1 = first.net.annual;
+                const net2 = second.net.annual;
+
+                let higher, lower, higherNet, lowerNet;
+                if (gross1 > gross2) {
+                    higher = gross1; lower = gross2;
+                    higherNet = net1; lowerNet = net2;
+                } else {
+                    higher = gross2; lower = gross1;
+                    higherNet = net2; lowerNet = net1;
+                }
+
+                const grossDiffPercent = ((higher - lower) / lower * 100).toFixed(1);
+                const netDiffPercent = ((higherNet - lowerNet) / lowerNet * 100).toFixed(1);
+                const labelHigher = gross1 > gross2 ? "First" : "Second";
+
+                results += `
+                    <div class="summary">
+                        💡 <strong>${labelHigher} salary</strong> is 
+                        <strong>${grossDiffPercent}% higher</strong> before tax 
+                        and <strong>${netDiffPercent}% higher</strong> after tax.
+                    </div>
+                    </div> <!-- close results div -->
+                `;
+                        
+            }
+
             document.getElementById('hourly-results').innerHTML = results;
             scrollWithOffset('hourly-results');
+
+
         }
+
 
         // Hourly to salary page
 } else if (currentPage === "hourly-to-salary") {
@@ -237,111 +280,163 @@ if (currentPage === "home") {
                 this.checked ? 'block' : 'none';
         });
   
-        // Salary to Hourly Calculator
-        function calculateHourlyToSalary() {
-            const salaryPerHour = parseFloat(document.getElementById('salary-per-hour').value);
-            const hoursWeekly = parseFloat(document.getElementById('hours-weekly').value);
-            const showDailyRate = document.getElementById('show-daily-pay-to-hourly').checked;
-            const showWeeklyRate = document.getElementById('show-weekly-pay-to-hourly').checked;
-            const showMonthlyRate = document.getElementById('show-monthly-pay-to-hourly').checked;
-            const compareSalariesToHourly = document.getElementById('compare-hourly-to-salary').checked;
-            
-            if (!salaryPerHour || !hoursWeekly) {
-                alert('Please enter both salary and weekly hours');
+        // Hourly to Salary Calculator
+    function calculateHourlyToSalary() {
+        const salaryPerHour = parseFloat(document.getElementById('salary-per-hour').value);
+        const hoursWeekly = parseFloat(document.getElementById('hours-weekly').value);
+        const showDailyRate = document.getElementById('show-daily-pay-to-hourly').checked;
+        const showWeeklyRate = document.getElementById('show-weekly-pay-to-hourly').checked;
+        const showMonthlyRate = document.getElementById('show-monthly-pay-to-hourly').checked;
+        const compareSalariesToHourly = document.getElementById('compare-hourly-to-salary').checked;
+
+        if (!salaryPerHour || !hoursWeekly) {
+            alert('Please enter both salary and weekly hours');
+            return;
+        }
+
+        const weeksPerYear = 52;
+
+        // Helper to compute all rates
+        const computeRates = (hourly, weeklyHours) => {
+            const annual = hourly * weeklyHours * weeksPerYear;
+            const gross = {
+                hourly,
+                daily: annual / (weeksPerYear * 5),
+                weekly: hourly * weeklyHours,
+                monthly: annual / 12,
+                annual
+            };
+            const takeHome = calculateTakeHome(annual);
+            const net = {
+                hourly: takeHome / (weeksPerYear * weeklyHours),
+                daily: takeHome / (weeksPerYear * 5),
+                weekly: takeHome / weeksPerYear,
+                monthly: takeHome / 12,
+                annual: takeHome
+            };
+            return { gross, net };
+        };
+
+        const first = computeRates(salaryPerHour, hoursWeekly);
+
+        const columns = [
+            { label: "Hourly", key: "hourly", show: true },
+            { label: "Daily", key: "daily", show: showDailyRate },
+            { label: "Weekly", key: "weekly", show: showWeeklyRate },
+            { label: "Monthly", key: "monthly", show: showMonthlyRate },
+            { label: "Annual", key: "annual", show: true },
+        ];
+
+        let results = `
+            <div class="results">
+                <h3>Salary Breakdown</h3>
+                <table class="salary-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            ${columns.filter(c => c.show).map(c => `<th>${c.label}</th>`).join('')}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gross Pay</strong></td>
+                            ${columns.filter(c => c.show).map(c => `<td>£${first.gross[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                        </tr>
+                        <tr>
+                            <td><strong>After Tax (Net)</strong></td>
+                            ${columns.filter(c => c.show).map(c => `<td class="income">£${first.net[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        if (compareSalariesToHourly) {
+            const salaryPerHour2 = parseFloat(document.getElementById('salary-per-hour-2').value);
+            const hoursWeekly2 = parseFloat(document.getElementById('hours-weekly-2').value);
+
+            if (!salaryPerHour2 || !hoursWeekly2) {
+                alert('Please enter both salary and weekly hours for the second job');
                 return;
             }
-            
-            const weeksPerYear = 52;
-            const annualSalary = salaryPerHour * (hoursWeekly * weeksPerYear);
-            const weeklySalary = salaryPerHour * hoursWeekly;
-            const monthlySalary = annualSalary / 12;
-            const dailySalary = annualSalary / weeksPerYear / 5;
-            
-            let results = `
+
+            const second = computeRates(salaryPerHour2, hoursWeekly2);
+
+            results += `
                 <div class="results">
-                    <h3>Salary Analysis</h3>
-                    
+                    <h3>Salary Comparison</h3>
+                    <table class="salary-table comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                ${columns.filter(c => c.show).map(c => `<th>${c.label}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1st Salary (Gross)</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td>£${first.gross[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Salary (Gross)</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td>£${second.gross[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>Difference (Gross)</strong></td>
+                                ${columns.filter(c => c.show).map(c => {
+                                    const diff = second.gross[c.key] - first.gross[c.key];
+                                    const cls = diff >= 0 ? 'income' : 'expenses';
+                                    return `<td class="${cls}">${diff >= 0 ? '+' : '-'}£${Math.abs(diff).toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`;
+                                }).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>1st Salary (Net)</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td>£${first.net[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>2nd Salary (Net)</strong></td>
+                                ${columns.filter(c => c.show).map(c => `<td>£${second.net[c.key].toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`).join('')}
+                            </tr>
+                            <tr>
+                                <td><strong>Difference (Net)</strong></td>
+                                ${columns.filter(c => c.show).map(c => {
+                                    const diff = second.net[c.key] - first.net[c.key];
+                                    const cls = diff >= 0 ? 'income' : 'expenses';
+                                    return `<td class="${cls}">${diff >= 0 ? '+' : '-'}£${Math.abs(diff).toLocaleString(undefined, { maximumFractionDigits: 2 })}</td>`;
+                                }).join('')}
+                            </tr>
+                        </tbody>
+                    </table>
             `;
-            
-             if(showDailyRate){
-                results += `<div class="result-item">
-                        <span class="result-label">Daily Rate (Gross)</span>
-                        <span id='daily-rate' class="result-value">£${dailySalary.toFixed(2)}</span>
-                    </div> `
-            }
-            if(showWeeklyRate){
-                results += `<div class="result-item">
-                        <span class="result-label">Weekly Pay (Gross)</span>
-                        <span id='weekly-rate' class="result-value">£${weeklySalary.toFixed(2)}</span>
-                    </div>`
-            }
-            if(showMonthlyRate){
-                results += `   
-                    
-                    <div class="result-item">
-                        <span class="result-label">Monthly Pay (Gross)</span>
-                        <span id='monthly-rate' class="result-value">£${monthlySalary.toFixed(2)}</span>
-                    </div>
-                `
+
+            // --- Summary inside same block ---
+            const gross1 = first.gross.annual;
+            const gross2 = second.gross.annual;
+            const net1 = first.net.annual;
+            const net2 = second.net.annual;
+
+            let higher, lower, higherNet, lowerNet;
+            if (gross1 > gross2) {
+                higher = gross1; lower = gross2;
+                higherNet = net1; lowerNet = net2;
+            } else {
+                higher = gross2; lower = gross1;
+                higherNet = net2; lowerNet = net1;
             }
 
-            results += `<div class="result-item">
-                        <span class="result-label">Annual Salary</span>
-                        <span class="result-value">£${annualSalary.toLocaleString()}</span>
-                    </div>
-            </div>`;
-            
-            if (compareSalariesToHourly) {
-                const salaryPerHour2 = parseFloat(document.getElementById('salary-per-hour-2').value);
-                const hoursWeekly2 = parseFloat(document.getElementById('hours-weekly-2').value);
-                
-                if (salaryPerHour2 && hoursWeekly2) {
-                    const annualSalary2 = salaryPerHour2 * (hoursWeekly2 * weeksPerYear);
-                    const weeklySalary2 = salaryPerHour2 * hoursWeekly2;
-                    const monthlySalary2 = annualSalary2 / 12;
-                    const dailySalary2 = annualSalary2 / weeksPerYear / 5;
+            const grossDiffPercent = ((higher - lower) / lower * 100).toFixed(1);
+            const netDiffPercent = ((higherNet - lowerNet) / lowerNet * 100).toFixed(1);
+            const labelHigher = gross1 > gross2 ? "First" : "Second";
 
-                    const rateDiff = (a, b) => (b - a).toFixed(2);
-                    const percentDiff = (a, b) => ((b - a) / a * 100).toFixed(1);
-
-                    results += `
-                        <div class="comparison">
-                            <div class="comparison-card">
-                                <h4>First Salary</h4>
-                                <p>£${salaryPerHour.toLocaleString()}/hour</p>
-                                <p>${hoursWeekly} hours/week</p>
-                                ${showDailyRate ? `<p>£${dailySalary.toFixed(2)}/day</p>` : ""}
-                                ${showWeeklyRate ? `<p>£${weeklySalary.toFixed(2)}/week</p>` : ""}
-                                ${showMonthlyRate ? `<p>£${monthlySalary.toFixed(2)}/month</p>` : ""}
-                                <p><strong>£${annualSalary.toLocaleString()}/year</strong></p>
-                            </div>
-                            <div class="comparison-card">
-                                <h4>Second salary</h4>
-                                <p>£${salaryPerHour2.toLocaleString()}/hour</p>
-                                <p>${hoursWeekly2} hours/week</p>
-                                ${showDailyRate ? `<p>£${dailySalary2.toFixed(2)}/day</p>` : ""}
-                                ${showWeeklyRate ? `<p>£${weeklySalary2.toFixed(2)}/week</p>` : ""}
-                                ${showMonthlyRate ? `<p>£${monthlySalary2.toFixed(2)}/month</p>` : ""}
-                                <p><strong>£${annualSalary2.toLocaleString()}/year</strong></p>
-                            </div>
-                        </div>
-                        <div class="results">
-                                <h3>Comparison Results</h3>
-                                <div class="result-item"><span class="result-label">Hourly Difference</span><span class="result-value ${salaryPerHour2 >= salaryPerHour ? 'income' : 'expenses'}">${salaryPerHour2 >= salaryPerHour ? '+' : '-'}£${Math.abs(rateDiff(salaryPerHour, salaryPerHour2))} (${percentDiff(salaryPerHour, salaryPerHour2)}%)</span></div>
-                    `;
-
-                    if (showDailyRate)
-                    results += `<div class="result-item"><span class="result-label">Daily Difference</span><span class="result-value ${dailySalary2>= dailySalary ? 'income' : 'expenses'}">${dailySalary2>= dailySalary ? '+' : '-'}£${Math.abs(rateDiff(dailySalary, dailySalary2))} (${percentDiff(dailySalary, dailySalary2)}%)</span></div>`;
-                    if (showWeeklyRate)
-                        results += `<div class="result-item"><span class="result-label">Weekly Difference</span><span class="result-value ${weeklySalary2 >= weeklySalary ? 'income' : 'expenses'}">${weeklySalary2 >= weeklySalary ? '+' : '-'}£${Math.abs(rateDiff(weeklySalary, weeklySalary2))} (${percentDiff(weeklySalary, weeklySalary2)}%)</span></div>`;
-                    if (showMonthlyRate)
-                        results += `<div class="result-item"><span class="result-label">Monthly Difference</span><span class="result-value ${monthlySalary2 >= monthlySalary ? 'income' : 'expenses'}">${monthlySalary2 >= monthlySalary ? '+' : '-'}£${Math.abs(rateDiff(monthlySalary, monthlySalary2))} (${percentDiff(monthlySalary, monthlySalary2)}%)</span></div>`;
-                        // Show annual difference as well
-                        results += `<div class="result-item"><span class="result-label">Annual Difference</span><span class="result-value ${annualSalary2 >= annualSalary ? 'income' : 'expenses'}">${annualSalary2 >= annualSalary ? '+' : '-'}£${Math.abs(rateDiff(annualSalary, annualSalary2))} (${percentDiff(annualSalary, annualSalary2)}%)</span></div>`;
-
-                    results += `</div>`;
-                }
-            }
+            results += `
+                <div class="summary">
+                    💡 <strong>${labelHigher} salary</strong> is 
+                    <strong>${grossDiffPercent}% higher</strong> before tax 
+                    and <strong>${netDiffPercent}% higher</strong> after tax.
+                </div>
+                </div> <!-- close results div -->
+            `;
+        }
             
             document.getElementById('hourly-to-salary-results').innerHTML = results;
             scrollWithOffset('hourly-to-salary-results');

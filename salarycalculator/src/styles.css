@@ -574,12 +574,57 @@
             font-size: 1.1rem;
         }
 
+        .result-value.income {
+            color: #2e7d32; /* green */
+            font-weight: 600;
+        }
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .salary-table th,
+        .salary-table td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+        }
+
+        .salary-table th {
+            background-color: #f3f4f6;
+            text-align: center;
+        }
+
+        .salary-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table {
+            margin-top: 2rem;
+        }
+        .summary {
+            margin-top: 1em;
+            font-size: 1.1em;
+            background: #f7f9fb;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        .summary strong {
+            color: #333;
+        }
+
+
         .income{
             color: #27ae60;
+            font-weight: 600;
         }
 
         .expenses{
             color: #e74c3c;
+            font-weight: 600;
         }
 
         .warning {
