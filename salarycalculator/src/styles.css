@@ -585,6 +585,15 @@
             text-align: center;
         }
 
+        .salary-table td {
+            border: 1px solid #ddd;
+            padding: 8px 10px;
+            text-align: center;
+            vertical-align: middle; /* ✅ keep text vertically centered */
+            white-space: nowrap;    /* ✅ prevent wrapping between + and digits */
+        } 
+
+
         .salary-table th,
         .salary-table td {
             border: 1px solid #ddd;
@@ -611,6 +620,9 @@
             padding: 10px 15px;
             border-radius: 8px;
             border-left: 4px solid #4CAF50;
+            border-right: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
         }
         .summary strong {
             color: #333;
@@ -998,6 +1010,101 @@
         .footer-bottom a:hover,.footer-bottom-links a:hover{
              color: #3498db;
         }
+
+        /* 📱 RESPONSIVE DESIGN FIXES */
+        @media (max-width: 900px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .checkboxes {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .checkbox-group {
+                justify-content: flex-start;
+            }
+
+            .calculate-btn {
+                padding: 12px 20px;
+                font-size: 15px;
+            }
+
+            .results {
+                padding: 20px;
+                font-size: 0.95rem;
+            }
+
+            .salary-table {
+                font-size: 14px;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+            /* ✅ Make comparison table scrollable on mobile */
+            .salary-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .salary-table table {
+                width: 100%;
+                min-width: 600px; /* prevent columns from squashing too much */
+                border-collapse: collapse;
+            }
+        }
+
+        
+
+        /* 📱 Very small screens (under 500px) */
+        @media (max-width: 500px) {
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input[type='number'], input[type='text'], select {
+                padding: 10px;
+                font-size: 15px;
+            }
+
+            .salary-table th,
+            .salary-table td {
+                padding: 6px;
+            }
+
+            .results {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 1060px){
+              .mobile-menu-toggle {
+                display: block;
+            }
+
+             .navbar {
+                position: relative;
+            }
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta {
+                display: none;
+            }
+
+        }
+
         @media (max-width: 868px) {
             .nav-links{
                 gap:5px;
