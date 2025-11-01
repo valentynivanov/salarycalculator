@@ -120,7 +120,7 @@
             <div class="form-group">
                 <div class="form-row">
                     <div>
-                        <label for="annual-salary">Annual Salary (£)</label>
+                        <label for="annual-salary">Annual Gross Salary (£)</label>
                         <input type="number" id="annual-salary" placeholder="35000" min="0">
                     </div>
                     <div>
@@ -132,33 +132,32 @@
             <div class="checkboxes">
                 <div class="form-group">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="show-daily-pay">
-                        <label for="show-daily-pay">Calculate Daily Rate</label>
+                        <input type="checkbox" id="show-daily-pay" checked>
+                        <label for="show-daily-pay">Show Daily Rate</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="show-weekly-pay">
-                        <label for="show-weekly-pay">Calculate Weekly Pay</label>
+                        <input type="checkbox" id="show-weekly-pay" checked>
+                        <label for="show-weekly-pay">Show Weekly Pay</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="checkbox-group">
-                        <input type="checkbox" id="show-monthly-pay">
-                        <label for="show-monthly-pay">Calculate Monthly Pay</label>
+                        <input type="checkbox" id="show-monthly-pay" checked>
+                        <label for="show-monthly-pay">Show Monthly Pay</label>
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="show-after-tax">
-                        <label for="show-after-tax">Show after-tax hourly rate (estimate)</label>
-                    </div>
-                </div> -->
-
                 <div class="form-group">
                     <div class="checkbox-group">
                         <input type="checkbox" id="compare-salaries">
-                        <label for="compare-salaries">Compare with second salary</label>
+                        <label for="compare-salaries">Compare with another salary</label>
+                        <span class="tooltip">
+                            i
+                            <span class="tooltiptext">
+                                Use this option to compare your current salary with another one — for example, to see how much more or less you’d earn if you changed jobs or roles.
+                            </span>
+                        </span>
                     </div>
                 </div>
             </div>
