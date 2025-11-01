@@ -1329,15 +1329,21 @@
         /* Tooltip */
         @media (max-width: 600px) {
             .tooltiptext {
-                max-width: 125px;        /* a bit wider for better readability */
-                right: 150%;             /* move tooltip slightly left */
-                transform: translateX(-50%);
-                bottom: 150%;
+                position: absolute;
+                max-width: 130px;        /* comfortable reading width */
+                right: auto;             /* align to the left of the icon */
+                left: auto;              /* prevent it from anchoring both sides */
+                transform: translateX(-10%); /* slight offset */
+                bottom: 140%;
                 font-size: 0.9rem;
                 line-height: 1.4;
                 text-align: left;
                 word-break: break-word;
+                padding: 8px 10px;
+                overflow-wrap: break-word;
+                white-space: normal;     /* allow wrapping */
+                box-sizing: border-box;
             }
         }
-            
+
             
